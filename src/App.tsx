@@ -56,43 +56,11 @@ const TODAY = '2026-04-22';
 
 const MOCK_RESEARCHES: Research[] = [
   {
-    id: 'RES-001',
-    title: 'Авто-ассистент ЦУ: Исследование фидбека',
-    type: 'интервью',
-    primaryInterviewer: '@dana.p',
-    additionalInterviewers: ['@konst.b'],
-    requestDate: '2026-04-01',
-    startDate: '2026-04-10',
-    endDate: '2026-04-20',
-    reward: '1000 рублей'
-  },
-  {
-    id: 'RES-002',
-    title: 'Мнение по поводу креативов в приложении (КК)',
-    type: 'ux-test',
-    primaryInterviewer: '@arman.o',
-    additionalInterviewers: ['@dana.p'],
-    requestDate: '2026-03-25',
-    startDate: '2026-04-05',
-    endDate: '2026-04-22',
-    reward: '1500 рублей'
-  },
-  {
-    id: 'RES-003',
-    title: 'UX-тестирование "Кубышки" в мобильном банке',
-    type: 'ux-test',
-    primaryInterviewer: '@elen.s',
-    additionalInterviewers: ['@tatyana.k'],
-    requestDate: '2026-03-15',
-    startDate: '2026-03-27',
-    endDate: '2026-03-30',
-    reward: '1500 рублей'
-  },
-  {
     id: 'RES-004',
-    title: 'Переводы по номеру телефона: барьеры',
+    title: 'Переводы по номеру телефона: барьеры и драйверы',
     type: 'интервью',
     primaryInterviewer: '@dana.p',
+    additionalInterviewers: ['@arman.o'],
     requestDate: '2026-04-15',
     startDate: '2026-04-22',
     endDate: '2026-04-30',
@@ -100,7 +68,7 @@ const MOCK_RESEARCHES: Research[] = [
   },
   {
     id: 'RES-005',
-    title: 'Лояльность клиентов малого бизнеса',
+    title: 'Лояльность клиентов малого бизнеса и ИП',
     type: 'интервью',
     primaryInterviewer: '@ivan.i',
     additionalInterviewers: ['@sergey.v', '@dana.p'],
@@ -108,42 +76,35 @@ const MOCK_RESEARCHES: Research[] = [
     startDate: '2026-04-20',
     endDate: '2026-05-01',
     reward: '2500 рублей'
-  },
-  {
-    id: 'RES-006',
-    title: 'Старое исследование (архив)',
-    type: 'ux-test',
-    primaryInterviewer: '@dana.p',
-    requestDate: '2026-01-01',
-    startDate: '2026-01-05',
-    endDate: '2026-01-10',
-    reward: '1000 рублей'
   }
 ];
 
 const MOCK_RESPONDENTS: Respondent[] = [
-  ...Array.from({ length: 45 }).map((_, i) => ({
-    id: `RESP-${1000 + i}`,
+  ...Array.from({ length: 42 }).map((_, i) => ({
+    id: `RESP-4-${100 + i}`,
     fullName: [
-      'Иванов Иван', 'Петров Петр', 'Сидоров Сидор', 'Смирнова Анна', 'Кузнецова Мария', 
-      'Попов Алексей', 'Васильев Василий', 'Соколов Дмитрий', 'Михайлов Михаил', 'Новиков Артем'
-    ][i % 10] + ' ' + ['Иванович', 'Петрович', 'Сидорович', 'Сергеевна', 'Дмитриевна'][i % 5],
-    siebelId: `S-${800000 + i}`,
-    researchId: 'RES-001',
+      'Александров Александр', 'Борисов Борис', 'Викторов Виктор', 'Григорьева Галина', 'Дмитриева Дарья', 
+      'Егоров Егор', 'Жукова Жанна', 'Зайцев Захар', 'Иванова Инна', 'Кириллов Кирилл'
+    ][i % 10] + ' ' + ['Александрович', 'Борисович', 'Викторович', 'Григорьевна', 'Дмитриевна'][i % 5],
+    siebelId: `S-400${800 + i}`,
+    researchId: 'RES-004',
     callStatus: (['В очереди на прозвон', 'В работе оператора', 'Согласились', 'Отказались', 'Отменен', 'Задача просрочена'] as CallStatus[])[i % 6],
     paymentStatus: (['Оплачено', 'Не оплачено', 'Нет статуса прихода', 'Согласились'] as PaymentStatus[])[i % 4],
-    meetingDate: i % 3 === 0 ? '2026-04-15' : undefined,
-    meetingTime: i % 3 === 0 ? '14:00' : undefined,
+    meetingDate: i % 4 === 0 ? '2026-04-25' : undefined,
+    meetingTime: i % 4 === 0 ? '11:00' : undefined,
   })),
-  ...Array.from({ length: 20 }).map((_, i) => ({
-    id: `RESP-${2000 + i}`,
-    fullName: `Тестовый Респондент ${i + 1}`,
-    siebelId: `S-${900000 + i}`,
-    researchId: 'RES-002',
-    callStatus: 'Согласились' as CallStatus,
-    paymentStatus: 'Оплачено' as PaymentStatus,
-    meetingDate: '2026-04-20',
-    meetingTime: '10:00',
+  ...Array.from({ length: 38 }).map((_, i) => ({
+    id: `RESP-5-${200 + i}`,
+    fullName: [
+      'Михайлов Михаил', 'Николаев Николай', 'Олегов Олег', 'Павлова Полина', 'Романова Раиса', 
+      'Сергеев Сергей', 'Тарасов Тарас', 'Уланов Ульян', 'Федорова Фаина', 'Харитонов Харитон'
+    ][i % 10] + ' ' + ['Михайлович', 'Николаевич', 'Олегович', 'Павловна', 'Романовна'][i % 5],
+    siebelId: `S-500${900 + i}`,
+    researchId: 'RES-005',
+    callStatus: (['Согласились', 'Отказались', 'В работе оператора', 'В очереди на прозвон'] as CallStatus[])[i % 4],
+    paymentStatus: (['Оплачено', 'Не оплачено'] as PaymentStatus[])[i % 2],
+    meetingDate: '2026-04-28',
+    meetingTime: `${10 + (i % 8)}:00`,
   }))
 ];
 
@@ -244,6 +205,7 @@ export default function App() {
   // Respondent filters in Details
   const [respondentSearch, setRespondentSearch] = useState('');
   const [respondentPaymentFilter, setRespondentPaymentFilter] = useState<PaymentStatus | 'все'>('все');
+  const [respondentCallFilter, setRespondentCallFilter] = useState<CallStatus | 'все'>('все');
 
   const isRecent = (endDate: string) => {
     const end = new Date(endDate);
@@ -331,10 +293,11 @@ export default function App() {
         r.siebelId.toLowerCase().includes(searchLower);
         
       const matchesPayment = respondentPaymentFilter === 'все' || r.paymentStatus === respondentPaymentFilter;
+      const matchesCall = respondentCallFilter === 'все' || r.callStatus === respondentCallFilter;
       
-      return matchesSearch && matchesPayment;
+      return matchesSearch && matchesPayment && matchesCall;
     });
-  }, [selectedResearch, respondentSearch, respondentPaymentFilter]);
+  }, [selectedResearch, respondentSearch, respondentPaymentFilter, respondentCallFilter]);
 
   if (!isAuthenticated) {
     return <AuthScreen onLogin={() => setIsAuthenticated(true)} />;
@@ -607,12 +570,7 @@ export default function App() {
                       <div>
                         <p className="text-sm font-bold text-gray-400 uppercase mb-1">Интервьюеры</p>
                         <div className="flex flex-wrap gap-2">
-                           <div className="flex items-center gap-1.5">
-                             <div className="w-4 h-4 rounded-full bg-blue-100 flex items-center justify-center">
-                               <User className="w-2.5 h-2.5 text-blue-600" />
-                             </div>
-                             <span className="text-sm font-semibold">{selectedResearch?.primaryInterviewer}</span>
-                           </div>
+                           <span className="text-sm font-semibold">{selectedResearch?.primaryInterviewer}</span>
                            {selectedResearch?.additionalInterviewers?.map(i => (
                              <span key={i} className="text-sm text-gray-500">{i}</span>
                            ))}
@@ -691,8 +649,7 @@ export default function App() {
                     </div>
 
                     <div className="bg-white p-6 border border-gray-200 rounded-sm shadow-sm space-y-4">
-                      <h3 className="text-sm font-bold uppercase tracking-wider flex items-center gap-2">
-                        <ArrowUpDown className="w-4 h-4 text-blue-500" />
+                      <h3 className="text-sm font-bold uppercase tracking-wider">
                         Статус выплат
                       </h3>
                       <div className="space-y-3">
@@ -722,6 +679,20 @@ export default function App() {
                       </div>
                       <div className="flex items-center gap-2">
                         <Filter className="w-4 h-4 text-gray-400" />
+                        <select 
+                          className="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-[#FFD700] transition-all"
+                          value={respondentCallFilter}
+                          onChange={(e) => setRespondentCallFilter(e.target.value as any)}
+                        >
+                          <option value="все">Все статусы обзвона</option>
+                          <option value="В очереди на прозвон">В очереди на прозвон</option>
+                          <option value="В работе оператора">В работе оператора</option>
+                          <option value="Согласились">Согласились</option>
+                          <option value="Отказались">Отказались</option>
+                          <option value="Отменен">Отменен</option>
+                          <option value="Задача просрочена">Задача просрочена</option>
+                        </select>
+
                         <select 
                           className="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-[#FFD700] transition-all"
                           value={respondentPaymentFilter}
