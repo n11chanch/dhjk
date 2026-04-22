@@ -10,7 +10,9 @@ import {
   XCircle,
   Clock,
   ShieldCheck,
-  Filter
+  Filter,
+  X,
+  ChevronDown
 } from 'lucide-react';
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -220,6 +222,25 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 25;
 
+  // Searchable Interviewer Dropdown State
+  const [showInterviewerDropdown, setShowInterviewerDropdown] = useState(false);
+
+  const interviewerOptions = useMemo(() => {
+    const all = new Set<string>();
+    MOCK_RESEARCHES.forEach(r => {
+      all.add(r.primaryInterviewer);
+      r.additionalInterviewers?.forEach(i => all.add(i));
+    });
+    return Array.from(all).sort();
+  }, []);
+
+  const filteredInterviewerOptions = useMemo(() => {
+    if (!filterInterviewer) return interviewerOptions;
+    return interviewerOptions.filter(i => 
+      i.toLowerCase().includes(filterInterviewer.toLowerCase())
+    );
+  }, [interviewerOptions, filterInterviewer]);
+
   // Respondent filters in Details
   const [respondentSearch, setRespondentSearch] = useState('');
   const [respondentPaymentFilter, setRespondentPaymentFilter] = useState<PaymentStatus | 'все'>('все');
@@ -365,13 +386,65 @@ export default function App() {
                     </div>
                     <div className="space-y-1">
                       <label className="text-sm font-bold text-gray-400 uppercase">Интервьюер</label>
-                      <input 
-                        type="text" 
-                        placeholder="@nickname"
-                        className="w-full px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-sm text-sm focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#FFD700] transition-all"
-                        value={filterInterviewer}
-                        onChange={(e) => setFilterInterviewer(e.target.value)}
-                      />
+                      <div className="relative">
+                        <input 
+                          type="text" 
+                          placeholder="@nickname"
+                          className="w-full px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-sm text-sm focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#FFD700] transition-all"
+                          value={filterInterviewer}
+                          onChange={(e) => {
+                            setFilterInterviewer(e.target.value);
+                            setShowInterviewerDropdown(true);
+                          }}
+                          onFocus={() => setShowInterviewerDropdown(true)}
+                        />
+                        <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
+                          {filterInterviewer && (
+                            <button 
+                              onClick={() => setFilterInterviewer('')}
+                              className="p-0.5 hover:bg-gray-200 rounded-full text-gray-400"
+                            >
+                              <X className="w-3.5 h-3.5" />
+                            </button>
+                          )}
+                          <ChevronDown className="w-4 h-4 text-gray-300" />
+                        </div>
+
+                        <AnimatePresence>
+                          {showInterviewerDropdown && (
+                            <>
+                              <div 
+                                className="fixed inset-0 z-10" 
+                                onClick={() => setShowInterviewerDropdown(false)} 
+                              />
+                              <motion.div 
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded-sm shadow-lg z-20 max-h-48 overflow-y-auto"
+                              >
+                                {filteredInterviewerOptions.length > 0 ? (
+                                  filteredInterviewerOptions.map(option => (
+                                    <button
+                                      key={option}
+                                      onClick={() => {
+                                        setFilterInterviewer(option);
+                                        setShowInterviewerDropdown(false);
+                                      }}
+                                      className="w-full text-left px-3 py-2 text-sm hover:bg-gray-50 transition-colors flex items-center justify-between group"
+                                    >
+                                      <span>{option}</span>
+                                      {filterInterviewer === option && <CheckCircle2 className="w-3.5 h-3.5 text-[#FFD700]" />}
+                                    </button>
+                                  ))
+                                ) : (
+                                  <div className="px-3 py-2 text-sm text-gray-400 italic">Ничего не найдено</div>
+                                )}
+                              </motion.div>
+                            </>
+                          )}
+                        </AnimatePresence>
+                      </div>
                     </div>
                     <div className="space-y-1">
                       <label className="text-sm font-bold text-gray-400 uppercase">Тип</label>
